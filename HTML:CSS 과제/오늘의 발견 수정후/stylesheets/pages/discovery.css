@@ -41,52 +41,42 @@
   color: var(--color-gray-500);
 }
 
-/* 첫 번째 줄 - 큰 카드 2개 */
-.card-link-column:nth-child(-n + 2) {
+.card-link {
+  list-style: none;
+  padding-left: 0;
+}
+
+.card-link-item {
+  float: left;
+  padding: 10px;
+}
+
+.card-link-item.big {
   width: 50%;
-  float: left;
-  padding: 10px;
 }
 
-/* 두 번째 줄 - 작은 카드 4개 */
-.card-link-column:nth-child(n + 3):nth-child(-n + 6) {
+.card-link-item.small {
   width: 25%;
-  float: left;
-  padding: 10px;
 }
 
-/* 세 번째 줄 - 중간 카드 3개 */
-.card-link-column:nth-child(7) {
-  width: 50%;
-  float: left;
-  padding: 10px;
-}
-
-.card-link-column:nth-child(8),
-.card-link-column:nth-child(9) {
-  width: 25%;
-  float: left;
-  padding: 10px;
-}
 
 .card-content {
   border: 1px solid var(--color-gray-500);
   position: relative;
   height: 310px;
+  transition: border-color 0.3s ease;
 }
 
 .card-content:hover,
 .card-content:focus {
   border: 1px solid var(--color-blue-500);
-
-  outline: none;
 }
 
 .product-card-image {
   padding-top: 10px;
 }
 
-.arrow-icon-container {
+.arrow-button {
   position: absolute;
   bottom: 20px;
   left: 20px;
@@ -94,7 +84,13 @@
   align-items: center;
   justify-content: center;
   background-color: var(--color-black-opacity-20);
-  transition: all 0.3s ease;
+  transition: background-color, color, transform 0.3s ease;
+}
+
+.arrow-button:hover,
+.arrow-button:focus {
+  background-color: var(--color-blue-500);
+  color: var(--color-white);
 }
 
 .arrow-icon {
@@ -102,8 +98,8 @@
   height: 40px;
 }
 
-.arrow-icon-container:hover::before,
-.arrow-icon-container:focus::before {
+.arrow-button:hover::before,
+.arrow-button:focus::before {
   content: "구매하기";
   color: var(--color-white);
   font-size: 14px;
@@ -111,9 +107,3 @@
   margin-left: 8px;
 }
 
-.arrow-icon-container:hover,
-.arrow-icon-container:focus {
-  background-color: var(--color-blue-500);
-
-  outline: none;
-}
