@@ -1,0 +1,104 @@
+/* Base 스타일 작성 */
+* {
+  box-sizing: border-box;
+  font-family: "Noto Sans KR", sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+/* 제목 스타일 - Bold(700) */
+.title-bold-16 {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.title-bold-24 {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.title-bold-28 {
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.title-bold-32 {
+  font-size: 32px;
+  font-weight: 700;
+}
+
+/* 제목 스타일 - Medium(500) */
+.title-medium-16 {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.title-medium-24 {
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.title-medium-28 {
+  font-size: 28px;
+  font-weight: 500;
+}
+
+.title-medium-32 {
+  font-size: 32px;
+  font-weight: 500;
+}
+
+/* 본문 텍스트 스타일 - Regular(400) */
+.text-regular-12 {
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.text-regular-14 {
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.text-regular-16 {
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.text-regular-18 {
+  font-size: 18px;
+  font-weight: 400;
+}
+
+.text-regular-20 {
+  font-size: 20px;
+  font-weight: 400;
+}
+
+/* 본문 텍스트 스타일 - Bold(700) */
+.text-bold-12 {
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.text-bold-14 {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.text-bold-16 {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.text-bold-18 {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.text-bold-20 {
+  font-size: 20px;
+  font-weight: 700;
+}

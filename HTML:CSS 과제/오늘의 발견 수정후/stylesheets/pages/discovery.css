@@ -1,0 +1,119 @@
+/* CSS 작성 */
+
+/* 컨테이너 중앙 정렬 */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* 헤더 스타일 */
+.header {
+  padding: 20px 0;
+  margin-top: 100px;
+  margin-bottom: 48px;
+}
+
+.logo {
+  margin: 0;
+  padding: 10px;
+}
+
+.logo img {
+  max-height: 40px;
+}
+
+/* 오늘의 발견 헤드라인 스타일 */
+.today-discovery-headline {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+  padding: 10px;
+}
+
+.today-discovery-headline h2 {
+  margin: 0;
+}
+
+.subtitle {
+  margin: 0;
+  color: var(--color-gray-500);
+}
+
+/* 첫 번째 줄 - 큰 카드 2개 */
+.card-link-column:nth-child(-n + 2) {
+  width: 50%;
+  float: left;
+  padding: 10px;
+}
+
+/* 두 번째 줄 - 작은 카드 4개 */
+.card-link-column:nth-child(n + 3):nth-child(-n + 6) {
+  width: 25%;
+  float: left;
+  padding: 10px;
+}
+
+/* 세 번째 줄 - 중간 카드 3개 */
+.card-link-column:nth-child(7) {
+  width: 50%;
+  float: left;
+  padding: 10px;
+}
+
+.card-link-column:nth-child(8),
+.card-link-column:nth-child(9) {
+  width: 25%;
+  float: left;
+  padding: 10px;
+}
+
+.card-content {
+  border: 1px solid var(--color-gray-500);
+  position: relative;
+  height: 310px;
+}
+
+.card-content:hover,
+.card-content:focus {
+  border: 1px solid var(--color-blue-500);
+
+  outline: none;
+}
+
+.product-card-image {
+  padding-top: 10px;
+}
+
+.arrow-icon-container {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-black-opacity-20);
+  transition: all 0.3s ease;
+}
+
+.arrow-icon {
+  width: 40px;
+  height: 40px;
+}
+
+.arrow-icon-container:hover::before,
+.arrow-icon-container:focus::before {
+  content: "구매하기";
+  color: var(--color-white);
+  font-size: 14px;
+  font-weight: 500;
+  margin-left: 8px;
+}
+
+.arrow-icon-container:hover,
+.arrow-icon-container:focus {
+  background-color: var(--color-blue-500);
+
+  outline: none;
+}
