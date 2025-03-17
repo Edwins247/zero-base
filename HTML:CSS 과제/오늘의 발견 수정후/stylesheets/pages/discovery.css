@@ -70,15 +70,14 @@
   position: relative;
   height: 310px;
   text-decoration: none;
-  transition: border-color 0.3s ease-in; /* 자연스러운 전환 효과 */
+  transition: border-color 0.3s ease-in; 
 }
 
 .card-content:hover,
 .card-content:focus-within {
-  border-color: var(--color-blue-500); /* 박스 라인 색상 변경 */
+  border-color: var(--color-blue-500); 
 }
 
-/* 버튼 스타일 */
 .purchase-icon-container {
   position: absolute;
   bottom: 20px;
@@ -89,20 +88,19 @@
   padding: 5px 10px;
   background-color: var(--color-black-opacity-20);
   border: none;
-  transition: background-color 0.3s ease; /* 자연스러운 전환 효과 */
+  transition: background-color 0.3s ease; 
 }
 
 .card-content:hover .purchase-icon-container::before,
 .card-content:focus-within .purchase-icon-container::before {
-  content: "구매하기"; /* 버튼 텍스트 추가 */
+  content: "구매하기"; 
   color: var(--color-white);
   font-size: 14px;
   font-weight: 500;
   margin-left: 8px;
 }
 
-/* 카드에 마우스 오버 또는 포커스 시 버튼 효과도 함께 변경 */
 .card-content:hover .purchase-icon-container,
 .card-content:focus-within .purchase-icon-container {
-  background-color: var(--color-blue-500); /* 버튼 배경색 변경 */
+  background-color: var(--color-blue-500); 
 }
