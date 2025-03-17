@@ -59,51 +59,50 @@
   width: 25%;
 }
 
-
-.card-content {
-  border: 1px solid var(--color-gray-500);
-  position: relative;
-  height: 310px;
-  transition: border-color 0.3s ease;
-}
-
-.card-content:hover,
-.card-content:focus {
-  border: 1px solid var(--color-blue-500);
-}
-
 .product-card-image {
   padding-top: 10px;
 }
 
-.arrow-button {
+/* 카드 콘텐츠 스타일 */
+.card-content {
+  display: block;
+  border: 1px solid var(--color-gray-500);
+  position: relative;
+  height: 310px;
+  text-decoration: none;
+  transition: border-color 0.3s ease-in; /* 자연스러운 전환 효과 */
+}
+
+.card-content:hover,
+.card-content:focus-within {
+  border-color: var(--color-blue-500); /* 박스 라인 색상 변경 */
+}
+
+/* 버튼 스타일 */
+.purchase-icon-container {
   position: absolute;
   bottom: 20px;
   left: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 5px 10px;
   background-color: var(--color-black-opacity-20);
-  transition: background-color, color, transform 0.3s ease;
+  border: none;
+  transition: background-color 0.3s ease; /* 자연스러운 전환 효과 */
 }
 
-.arrow-button:hover,
-.arrow-button:focus {
-  background-color: var(--color-blue-500);
-  color: var(--color-white);
-}
-
-.arrow-icon {
-  width: 40px;
-  height: 40px;
-}
-
-.arrow-button:hover::before,
-.arrow-button:focus::before {
-  content: "구매하기";
+.card-content:hover .purchase-icon-container::before,
+.card-content:focus-within .purchase-icon-container::before {
+  content: "구매하기"; /* 버튼 텍스트 추가 */
   color: var(--color-white);
   font-size: 14px;
   font-weight: 500;
   margin-left: 8px;
 }
 
+/* 카드에 마우스 오버 또는 포커스 시 버튼 효과도 함께 변경 */
+.card-content:hover .purchase-icon-container,
+.card-content:focus-within .purchase-icon-container {
+  background-color: var(--color-blue-500); /* 버튼 배경색 변경 */
+}
