@@ -59,15 +59,13 @@
   width: 25%;
 }
 
-.product-card-image {
-  padding-top: 10px;
-}
-
 /* 카드 콘텐츠 스타일 */
 .card-content {
-  display: block;
+  display: flex;
   border: 1px solid var(--color-gray-500);
   position: relative;
+  justify-content: center;
+  align-items: center;
   height: 310px;
   text-decoration: none;
   transition: border-color 0.3s ease-in; 
@@ -85,7 +83,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 5px 10px;
   background-color: var(--color-black-opacity-20);
   border: none;
   transition: background-color 0.3s ease; 
@@ -97,7 +94,8 @@
   color: var(--color-white);
   font-size: 14px;
   font-weight: 500;
-  margin-left: 8px;
+  line-height: 1.2;
+  margin-left: 20px;
 }
 
 .card-content:hover .purchase-icon-container,

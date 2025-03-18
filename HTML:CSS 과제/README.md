@@ -342,3 +342,86 @@
 2. 조건이 동시에 있는 경우 잘 확인하고 진행하자.(호버와 포커스 부분 같이)
 3. 태그를 스타일링으로 생각해서 쓰면 안된다. 스타일은 따로 처리해야한다.(그리고 alt, 네이밍 등 명확하게 하자)
 4. https://validator.w3.org/nu/#textarea 잘 활용해서 HTML 태그 등 유효성 검사 습관화하자!
+
+---- 
+### 추가 피드백
+- 박스모델에서 이미지가 중앙 정렬이 되어 있지 않고, 구매하기 버튼의 경우 실제 디자인 UI보다 큼
+- 수정 전
+```css
+.product-card-image {
+  padding-top: 10px;
+}
+
+/* 카드 콘텐츠 스타일 */
+.card-content {
+  display: block;
+  border: 1px solid var(--color-gray-500);
+  position: relative;
+  height: 310px;
+  text-decoration: none;
+  transition: border-color 0.3s ease-in; 
+}
+
+.card-content:hover,
+.card-content:focus-within {
+  border-color: var(--color-blue-500); 
+}
+
+.purchase-icon-container {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 10px;
+  background-color: var(--color-black-opacity-20);
+  border: none;
+  transition: background-color 0.3s ease; 
+}
+```
+- 수정 후
+- 먼저 중앙 정렬을 하기 위해서 card-content를 display: flex로 한 뒤, 아이템을 정렬했음, 사실 첫 시도는 margin으로 product-card-image를 직접 처리하려고 했으나, 일관적이지 않은 것 같아서 고민 후 수정함
+- 그리고 디테일한 UI 경우도, 실제 피그마 시안과 다르게 구매하기 버튼을 과도하게 만들었음(너무 기능에만 집중했음)
+- 이에 대해서도 불필요한 padding값을 지워서 원상복구 시키고 before content의 경우도, 디자인 시안에 맞게 수정함
+```css
+.card-content {
+  display: flex;
+  border: 1px solid var(--color-gray-500);
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  height: 310px;
+  text-decoration: none;
+  transition: border-color 0.3s ease-in; 
+}
+
+.card-content:hover,
+.card-content:focus-within {
+  border-color: var(--color-blue-500); 
+}
+
+.purchase-icon-container {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-black-opacity-20);
+  border: none;
+  transition: background-color 0.3s ease; 
+}
+
+.card-content:hover .purchase-icon-container::before,
+.card-content:focus-within .purchase-icon-container::before {
+  content: "구매하기"; 
+  color: var(--color-white);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.2;
+  margin-left: 20px;
+}
+```
+### 추가 총평
+1. 피그마 시안은 디자이너에게 넘어오는 것이기 때문에, 기능 구현 뿐 아니라 박스모델이나 padding & margin 외에도 디테일한 시안대로 만들어주는 것이 중요함, 그렇기에 이런 부분 대충 넘기지 말고 확실하게 디자인 확인하자!
