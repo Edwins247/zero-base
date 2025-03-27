@@ -265,3 +265,115 @@ window.addEventListener("beforeunload", () => {
 - 그렇게 해서 토클 이벤트를 처리하고 그 다음 상태 저장 역시, 상태 변경할 때마다 저장하는 것이 아닌, 마지막 unmount 시에만 한 번, 사용자가 페이지를 떠나기 전, beforeunload 이벤트를 통해서 상태를 저장함
 
 ------
+
+## Star-rating 수정사항
+
+### 이벤트 위임과 이벤트 버블링
+- 수정전
+```javascript
+    // 마우스 오버 핸들러
+    const handleMouseOver = (event) => {
+      const ratingValue = parseInt(event.target.dataset.ratingValue, 10);
+      stars.forEach((star, index) => {
+        star.classList.toggle('hovered', index < ratingValue);
+      });
+    };
+  
+    // 마우스 아웃 핸들러
+    const handleMouseOut = () => {
+      stars.forEach((star) => star.classList.remove('hovered'));
+    };
+  
+    // 클릭 핸들러
+    const handleClick = (event) => {
+      selectedRating = parseInt(event.target.dataset.ratingValue, 10);
+      stars.forEach((star, index) => {
+        star.classList.toggle('selected', index < selectedRating);
+      });
+  
+      // 커스텀 이벤트 'rating-change' 발생
+      const ratingChangeEvent = new CustomEvent('rating-change', {
+        detail: selectedRating,
+      });
+      container.dispatchEvent(ratingChangeEvent);
+    };
+  
+    // 이벤트 리스너 등록
+    stars.forEach((star) => {
+      star.addEventListener('mouseover', handleMouseOver);
+      star.addEventListener('mouseout', handleMouseOut);
+      star.addEventListener('click', handleClick);
+    });
+```
+- 수정후 - 1(이벤트 버블링이 되지 않게끔 mouseenter, mouseleave 사용)
+```javascript
+    // 마우스 Enter 핸들러
+    const handleMouseEnter = (event) => {
+      const ratingValue = parseInt(event.target.dataset.ratingValue, 10);
+      stars.forEach((star, index) => {
+        star.classList.toggle('hovered', index < ratingValue);
+      });
+    };
+  
+    // 마우스 Leave 핸들러
+    const handleMouseLeave = () => {
+      stars.forEach((star) => star.classList.remove('hovered'));
+    };
+  
+    // 클릭 핸들러
+    const handleClick = (event) => {
+      selectedRating = parseInt(event.target.dataset.ratingValue, 10);
+      stars.forEach((star, index) => {
+        star.classList.toggle('selected', index < selectedRating);
+      });
+  
+      // 커스텀 이벤트 'rating-change' 발생
+      const ratingChangeEvent = new CustomEvent('rating-change', {
+        detail: selectedRating,
+      });
+      container.dispatchEvent(ratingChangeEvent);
+    };
+  
+    // 이벤트 리스너 등록
+    stars.forEach((star) => {
+      star.addEventListener('mouseenter', handleMouseEnter);
+      star.addEventListener('mouseleave', handleMouseLeave);
+      star.addEventListener('click', handleClick);
+    });
+```
+- 수정후 - 2(이벤트 버블링이 되지만 부모 컨테이너에 단일 이벤트 리스너를 추가해서 모든 자식 요소 이벤트를 처리함)
+```javascript
+  // 이벤트 위임을 사용하여 부모 컨테이너에서 이벤트 처리
+  container.addEventListener("mouseover", (event) => {
+    if (event.target.tagName === "I") {
+      // 별 요소인지 확인
+      const ratingValue = parseInt(event.target.dataset.ratingValue, 10);
+      stars.forEach((star, index) => {
+        star.classList.toggle("hovered", index < ratingValue); // 호버 상태 적용
+      });
+    }
+  });
+
+  container.addEventListener("mouseout", () => {
+    stars.forEach((star) => star.classList.remove("hovered")); // 호버 상태 초기화
+  });
+
+  container.addEventListener("click", (event) => {
+    if (event.target.tagName === "I") {
+      // 별 요소인지 확인
+      selectedRating = parseInt(event.target.dataset.ratingValue, 10);
+      stars.forEach((star, index) => {
+        star.classList.toggle("selected", index < selectedRating); // 선택 상태 적용
+      });
+
+      // 커스텀 이벤트 'rating-change' 발생
+      const ratingChangeEvent = new CustomEvent("rating-change", {
+        detail: selectedRating,
+      });
+      container.dispatchEvent(ratingChangeEvent);
+    }
+  });
+```
+
+### 클래스형으로 변환
+- 기존의 index.js 파일을 class.js처럼 클래스형으로 만든다면 다음과 같이 만들 수 있음
