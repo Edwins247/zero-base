@@ -632,3 +632,107 @@ export default function StarRating(container) {
 }
 ```
 - 코드 단위를 좀 더 명확하게 나눠서 구분, 선택된 rating의 경우, 지역변수로 해서 전역변수로 처리하지 않도록 함
+
+-----
+
+### 3차 추가 피드백
+- 수정전
+```javascript
+
+  // stars의 상태 처리 및 이벤트 dispatch 하는 메소드
+  const starsStateManager = () => {
+    // 전역변수로 처리하는 것보다 선택된 star만 처리하게 지역변수로 처리
+    let selectedRating = 0;
+
+    /**
+     * 재사용성 아쉬움
+     */
+    const updateSelectedRating = (rating) => {
+      selectedRating = rating;
+      stars.forEach((star, index) => {
+        star.classList.toggle("selected", index < selectedRating);
+      });
+      const ratingChangeEvent = new CustomEvent("rating-change", {
+        detail: selectedRating,
+      });
+      container.dispatchEvent(ratingChangeEvent);
+    };
+
+    // 선택된 별 개수를 처리하는 메소드 리턴으로 돌려줌
+    return { updateSelectedRating };
+  }
+
+  // mouseover, mouseout, click 이벤트 처리하는 메소드
+  const addEventListeners = (starsState) => {
+    container.addEventListener("mouseover", (event) => {
+      if (event.target.tagName === "I") {
+        const ratingValue = parseInt(event.target.dataset.ratingValue, 10);
+        stars.forEach((star, index) => {
+          star.classList.toggle("hovered", index < ratingValue);
+        });
+      }
+    });
+
+    container.addEventListener("mouseout", () => {
+      stars.forEach((star) => star.classList.remove("hovered"));
+    })
+
+    container.addEventListener("click", (event) => {
+      if (event.target.tagName === "I") {
+        const ratingValue = parseInt(event.target.dataset.ratingValue, 10);
+        starsState.updateSelectedRating(ratingValue);
+      }
+    });
+  };
+
+
+```
+- 수정후
+```javascript
+  const starsStateManager = () => {
+    // 전역변수로 처리하는 것보다 선택된 star만 처리하게 지역변수로 처리
+    let selectedRating = 0;
+
+
+    const updateSelectedRating = (rating, isClicked = false) => {
+      if (isClicked) {
+        selectedRating = rating;
+        const ratingChangeEvent = new CustomEvent("rating-change", {
+          detail: selectedRating,
+        });
+        container.dispatchEvent(ratingChangeEvent);
+      }
+      stars.forEach((star, index) => {
+        star.classList.toggle("selected", index < selectedRating); 
+        star.classList.toggle("hovered", !isClicked && index < rating); 
+      });
+    };
+
+    // 선택된 별 개수를 처리하는 메소드 리턴으로 돌려줌
+    return { updateSelectedRating };
+  }
+
+
+  // mouseover, mouseout, click 이벤트 처리하는 메소드
+  const starEvents = (starsState) => {
+    container.addEventListener("mouseover", (event) => {
+      if (event.target.tagName === "I") {
+        const ratingValue = parseInt(event.target.dataset.ratingValue, 10);
+        starsState.updateSelectedRating(ratingValue, false); 
+      }
+    });
+
+    container.addEventListener("mouseout", () => {
+      stars.forEach((star) => star.classList.remove("hovered"));
+    })
+
+    container.addEventListener("click", (event) => {
+      if (event.target.tagName === "I") {
+        const ratingValue = parseInt(event.target.dataset.ratingValue, 10);
+      starsState.updateSelectedRating(ratingValue, true); 
+      }
+    });
+  };
+
+```
+- starsState를 처리하기 때문에 updateSelectedRating 메소드를 같이 쓰게 처리함, 이 때 매개변수로 클릭인지 mouseover인지 판별하고, 그 기준에 따라 조건문 처리를 함
