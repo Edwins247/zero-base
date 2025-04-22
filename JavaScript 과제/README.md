@@ -736,3 +736,107 @@ export default function StarRating(container) {
 
 ```
 - starsState를 처리하기 때문에 updateSelectedRating 메소드를 같이 쓰게 처리함, 이 때 매개변수로 클릭인지 mouseover인지 판별하고, 그 기준에 따라 조건문 처리를 함
+
+
+----
+### NewsViewer 피드백 적용
+1. 캐싱 기능 위해 별도로 캐싱 utils 만들어서 처리함, 이렇게 함으로써 매번 News를 API 호출하지 않고 기본 캐싱을 해서 로드하고 처리함
+2. 이에 대해서 기본 객체 형태 사용
+```javascript
+const newsCache = {}; 
+
+export function cacheNews(category, page, data) {
+  const key = `${category}-${page}`;
+  newsCache[key] = data;
+}
+
+export function getCachedNews(category, page) {
+  const key = `${category}-${page}`;
+  return newsCache[key];
+}
+```
+```javascript
+  async loadNews() {
+    const { category, page } = store.state;
+
+    const cached = getCachedNews(category, page);
+    if (cached) {
+      if (page === 1) {
+        this.articles = cached.articles;
+      } else {
+        this.articles = [...this.articles, ...cached.articles];
+      }
+      this.hasMore = cached.articles.length > 0;
+      this.render();
+      return;
+    }
+
+    try {
+      this.loading = true;
+      this.render(); 
+
+      const response = await fetchNews(category, page);
+      cacheNews(category, page, response);
+
+      if (page === 1) {
+        this.articles = response.articles;
+      } else {
+        this.articles = [...this.articles, ...response.articles];
+      }
+
+      this.hasMore = response.articles.length > 0;
+    } catch (error) {
+      console.error("뉴스를 불러오던 중 에러가 발생했습니다:", error);
+    } finally {
+      this.loading = false;
+      this.render();
+    }
+  }
+```
+- 추가로 XSS 공격에 대해서도 고민을 해 봄
+- 이는 악성 스크립트를 주입해서 사용자의 브라우저에서 실행되도록 하는 공격 기법인데, 이를 사용자가 제공한 뉴스 데이터의 HTML에 직접 삽입되는 현재 구조에서는 그렇게 처리할 수 있음
+- 이를 간단하게 방어 매커니즘으로 함수를 만들어서 처리함, 그렇게 해서 해당 구조가 직접적으로 스크립트가 들어오지 못하게 방어함
+```javascript
+function escapeHTML(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+```
+```javascript
+    if (this.articles.length > 0) {
+      html += '<article class="news-list">';
+
+      this.articles.forEach((article) => {
+        html += `
+          <section class="news-item">
+            <div class="thumbnail">
+              <a href="${
+                escapeHTML(article.url)
+              }" target="_blank" rel="noopener noreferrer">
+                <img src="${
+                  escapeHTML(article.urlToImage || defaultImage)
+                }" alt="thumbnail">
+              </a>
+            </div>
+            <div class="contents">
+              <h2>
+                <a href="${
+                  escapeHTML(article.url)
+                }" target="_blank" rel="noopener noreferrer">
+                  ${escapeHTML(article.title)}
+                </a>
+              </h2>
+              <p>${escapeHTML(article.description || "")}</p>
+            </div>
+          </section>
+        `;
+      });
+
+      html += "</article>";
+    }
+```
+- 그 외에 DOMPuritfy 라이브러리를 사용하거나, CSP헤더를 추가하거나 하지만 일반적으로 템플릿 엔진이나 프레임워크에서는 알아서 방어함
