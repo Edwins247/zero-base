@@ -1,0 +1,79 @@
+@import url(https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css);
+
+:root {
+    --calendar-width: 25rem; 
+}
+
+.calendar {
+    width: var(--calendar-width);
+    background-color: white;
+    border-radius: calc(var(--calendar-width) * 0.04); 
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.calendar-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #4CAF50;
+    padding: calc(var(--calendar-width) * 0.05); 
+}
+
+.current-month {
+    font-size: calc(var(--calendar-width) * 0.05); 
+    font-weight: 400;
+    color: white;
+    text-align: center;
+}
+
+.prev-btn,
+.next-btn {
+    background-color: transparent;
+    border: none;
+    color: white;
+    font-size: calc(var(--calendar-width) * 0.055); 
+    cursor: pointer;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: calc(var(--calendar-width) * 0.05); 
+    padding: calc(var(--calendar-width) * 0.05); 
+}
+
+.weekday {
+    text-align: center;
+    font-size: calc(var(--calendar-width) * 0.035); 
+    font-weight: bold;
+    color: #aaa;
+}
+
+.date {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(var(--calendar-width) * 0.1); 
+    font-size: calc(var(--calendar-width) * 0.04); 
+    cursor: pointer;
+}
+
+.date:hover, .date.selected {
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 50%;
+}
+
+.date.current {
+    border-radius: 50%;
+    border: calc(var(--calendar-width) * 0.005) solid #4CAF50; 
+}
+
+.date.other-month {
+    color: #ccc; 
+}
+
+.date.sunday {
+    color: #FF5252; 
+}

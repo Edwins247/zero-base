@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendar & DatePicker</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./calendar/theme.css"/>
+    <link rel="stylesheet" href="./datepicker/theme.css"/>
+    <link rel="stylesheet" href="./styles.css"/>
+
+</head>
+<body>
+
+    <div class="container">
+        <div class="date-picker-container">
+            <h2>Date Picker</h2>
+            <input type="text" class="date-picker datepicker" placeholder="Select date" readonly>
+        </div>    
+
+        <div class="calendar-wrapper">
+            <div class="calendar">
+                <div class="calendar-nav">
+                    <button class="prev-btn"><i class='bx bxs-left-arrow'></i></button>
+                    <div class="current-month"></div>
+                    <button class="next-btn"><i class='bx bxs-right-arrow'></i></button>
+                </div>
+                <div class="calendar-grid"></div>
+            </div>
+        </div>
+    </div>
+    
+
+    <script type="module" src="./utils.js"></script>
+    <script type="module" src="./calendar/calendar.js"></script>
+    <script type="module" src="./datepicker/datepicker.js"></script>
+    <script type="module" src="app.js"></script>
+
+
+</body>
+</html>
