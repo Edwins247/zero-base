@@ -18,6 +18,6 @@ export const fetchNews = async (category, page = 1, pageSize = 5) => {
 
   } catch (error) {
     console.error("뉴스를 불러오던 중 에러가 발생했습니다.", error);
-    return { articles: [], totalResults: 0 };
+    throw error;
   }
 };

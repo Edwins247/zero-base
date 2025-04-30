@@ -135,3 +135,11 @@ body {
   padding: 20px 0;
   width: 100%;
 }
+
+.error-message {
+  padding: 16px;
+  background: white;
+  color: red;
+  margin-bottom: 16px;
+  border-radius: 4px;
+}
