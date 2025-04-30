@@ -38,17 +38,18 @@ export default class NewsList extends Component {
   }
 
   async loadNews() {
-    const { category, page } = store.state;
+    const { category, page, isChangeCategory } = store.state;
 
     const cached = getCachedNews(category, page);
     if (cached) {
-      if (page === 1) {
+      if (isChangeCategory) {
         this.articles = cached.articles;
       } else {
         this.articles = [...this.articles, ...cached.articles];
       }
       this.hasMore = cached.articles.length > 0;
       this.render();
+      if (isChangeCategory) store.state.isChangeCategory = false;
       return;
     }
 
@@ -59,7 +60,7 @@ export default class NewsList extends Component {
       const response = await fetchNews(category, page);
       cacheNews(category, page, response);
 
-      if (page === 1) {
+      if (isChangeCategory) {
         this.articles = response.articles;
       } else {
         this.articles = [...this.articles, ...response.articles];
@@ -71,6 +72,7 @@ export default class NewsList extends Component {
     } finally {
       this.loading = false;
       this.render();
+      if (isChangeCategory) store.state.isChangeCategory = false;
     }
   }
 

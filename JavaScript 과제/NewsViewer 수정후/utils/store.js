@@ -24,6 +24,7 @@ class Store {
     this._state = {
       category: "all",
       page: 1,
+      isChangeCategory: false,
     };
 
     this.state = new Proxy(this._state, {

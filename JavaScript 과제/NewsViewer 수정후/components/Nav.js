@@ -41,6 +41,8 @@ export default class Nav extends Component {
       store.state.category = category;
 
       store.state.page = 1;
+
+      store.state.isChangeCategory = true;
     }
   }
 
