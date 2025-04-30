@@ -124,7 +124,6 @@ export default class NewsList extends Component {
   render() {
     this.clearExistingElements(".news-list-container, .error-message");
 
-    // 에러 메시지 먼저 표시
     if (this.errorMessage) {
       const errorContainer = document.createElement("div");
       errorContainer.className = "error-message";
